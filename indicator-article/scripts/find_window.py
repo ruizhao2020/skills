@@ -91,7 +91,10 @@ def occurrences(values: list[dict], fields: list[str]) -> dict[str, list[int]]:
 
 
 def pick_separated(lo: int, hi: int, positions: dict[str, list[int]], min_gap: int) -> dict[str, int] | None:
-    """在 [lo, hi] 内为每个形态选一个实例，使两两间隔 ≥ min_gap。
+    """在 [lo, hi) 内为每个形态选一个实例，使两两间隔 ≥ min_gap。
+
+    左闭右开：与取行情切片（rows[start:end]）保持一致，避免选到窗口右端之外的那根。
+    
 
     贪心：先处理候选最少的形态，每次选"离已选实例最远"的那个。
     找不到就返回 None（不保证最优，但对"挑一个可见窗口"足够）。
